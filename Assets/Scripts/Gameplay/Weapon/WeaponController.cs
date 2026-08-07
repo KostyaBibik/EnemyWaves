@@ -1,3 +1,4 @@
+using System;
 using EnemyWaves.Configs;
 using EnemyWaves.Services;
 using UnityEngine;
@@ -8,6 +9,9 @@ namespace EnemyWaves.Gameplay.Weapon
     public class WeaponController : MonoBehaviour
     {
         [SerializeField] private Transform _muzzle;
+
+        /// <summary>Raised each time a shot is fired. Used by PlayerAnimatorDriver to trigger the fire animation.</summary>
+        public event Action Fired;
 
         private WeaponConfig _config;
         private ITargetRegistry _targetRegistry;
@@ -47,6 +51,7 @@ namespace EnemyWaves.Gameplay.Weapon
             var rotation = Quaternion.LookRotation(direction.normalized, Vector3.up);
             var projectile = _projectileFactory.Create(origin, rotation);
             projectile.Launch(_config.Damage, _config.ProjectileSpeed, _config.Range);
+            Fired?.Invoke();
         }
     }
 }
