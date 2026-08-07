@@ -152,10 +152,10 @@ RectTransform:
   - {fileID: 46548270}
   m_Father: {fileID: 1798766772}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 28, y: -28}
-  m_SizeDelta: {x: 420, y: 56}
+  m_AnchorMin: {x: 0.03027013, y: 0.9607867}
+  m_AnchorMax: {x: 0.45200002, y: 0.98647803}
+  m_AnchoredPosition: {x: -2, y: 0}
+  m_SizeDelta: {x: 2, y: 2}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &24089310
 MonoBehaviour:
@@ -747,10 +747,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1798766772}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -28, y: -28}
-  m_SizeDelta: {x: 200, y: 56}
+  m_AnchorMin: {x: 0.771, y: 0.9607867}
+  m_AnchorMax: {x: 0.9710001, y: 0.98647803}
+  m_AnchoredPosition: {x: 1, y: 0}
+  m_SizeDelta: {x: 2, y: 2}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &640883393
 MonoBehaviour:
@@ -955,6 +955,7 @@ MonoBehaviour:
   _weaponConfig: {fileID: 11400000, guid: d1a802c9d4dd78b4993821cc377a73a8, type: 2}
   _enemyDatabase: {fileID: 11400000, guid: 350e61407f9810a418540c6648edca77, type: 2}
   _waveConfig: {fileID: 11400000, guid: bc4a5ac2aad2c05408dff0dd43bc94f1, type: 2}
+  _vfxConfig: {fileID: 11400000, guid: 205f2be5c5b3ffe4aadd3dd512742ee7, type: 2}
   _playerHealth: {fileID: 1061055264}
   _joystickInput: {fileID: 577220049}
   _hudView: {fileID: 1664168036}
@@ -1039,6 +1040,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1be921d79ef976d4286d20d80e60fc07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyWaves.Gameplay.Player.PlayerHealth
+  _hitEffectHeight: 0
 --- !u!114 &1061055265
 MonoBehaviour:
   m_ObjectHideFlags: 0

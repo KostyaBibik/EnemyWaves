@@ -17,18 +17,27 @@ namespace EnemyWaves.Gameplay.Weapon
         private WeaponConfig _config;
         private ITargetRegistry _targetRegistry;
         private Projectile.Factory _projectileFactory;
+        private IGameStateService _gameState;
         private float _cooldown;
 
         [Inject]
-        public void Construct(WeaponConfig config, ITargetRegistry targetRegistry, Projectile.Factory projectileFactory)
+        public void Construct(
+            WeaponConfig config,
+            ITargetRegistry targetRegistry,
+            Projectile.Factory projectileFactory,
+            IGameStateService gameState)
         {
             _config = config;
             _targetRegistry = targetRegistry;
             _projectileFactory = projectileFactory;
+            _gameState = gameState;
         }
 
         private void Update()
         {
+            if (_gameState.IsGameOver.Value)
+                return;
+
             _cooldown -= Time.deltaTime;
             if (_cooldown > 0f)
                 return;

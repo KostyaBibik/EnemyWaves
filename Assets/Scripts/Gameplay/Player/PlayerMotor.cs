@@ -14,18 +14,25 @@ namespace EnemyWaves.Gameplay.Player
         private PlayerConfig _config;
         private WeaponConfig _weaponConfig;
         private ITargetRegistry _targetRegistry;
+        private IGameStateService _gameState;
         private CharacterController _controller;
 
         /// <summary>Move input expressed relative to the current facing (x = strafe, y = forward). Drives the locomotion blend tree.</summary>
         public Vector2 LocalMoveInput { get; private set; }
 
         [Inject]
-        public void Construct(IInputService inputService, PlayerConfig config, WeaponConfig weaponConfig, ITargetRegistry targetRegistry)
+        public void Construct(
+            IInputService inputService,
+            PlayerConfig config,
+            WeaponConfig weaponConfig,
+            ITargetRegistry targetRegistry,
+            IGameStateService gameState)
         {
             _inputService = inputService;
             _config = config;
             _weaponConfig = weaponConfig;
             _targetRegistry = targetRegistry;
+            _gameState = gameState;
         }
 
         private void Awake()
@@ -35,6 +42,12 @@ namespace EnemyWaves.Gameplay.Player
 
         private void Update()
         {
+            if (_gameState.IsGameOver.Value)
+            {
+                LocalMoveInput = Vector2.zero;
+                return;
+            }
+
             Vector2 input = _inputService.MoveDirection;
             Vector3 worldMove = new Vector3(input.x, 0f, input.y);
             bool hasInput = worldMove.sqrMagnitude > 0.0001f;

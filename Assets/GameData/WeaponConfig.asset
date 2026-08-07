@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ee6875d2b9d8334bb99cc320194375f, type: 3}
   m_Name: WeaponConfig
   m_EditorClassIdentifier: Assembly-CSharp::EnemyWaves.Configs.WeaponConfig
-  FireRate: 3
+  FireRate: 2
   Damage: 12
   Range: 9
   ProjectileSpeed: 25

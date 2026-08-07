@@ -21,6 +21,8 @@ namespace EnemyWaves.Gameplay.Enemies
         private ITargetRegistry _targetRegistry;
         private IEnemyFactory _enemyFactory;
         private ITargetProvider _playerTarget;
+        private IVfxService _vfxService;
+        private VfxConfig _vfxConfig;
 
         private readonly EnemyModel _model = new EnemyModel();
         private IDisposable _healthSubscription;
@@ -34,10 +36,17 @@ namespace EnemyWaves.Gameplay.Enemies
         public bool IsAlive => _model.IsAlive;
 
         [Inject]
-        public void Construct(ITargetRegistry targetRegistry, IEnemyFactory enemyFactory, [Inject(Id = PlayerTargetId.Value)] ITargetProvider playerTarget)
+        public void Construct(
+            ITargetRegistry targetRegistry,
+            IEnemyFactory enemyFactory,
+            IVfxService vfxService,
+            VfxConfig vfxConfig,
+            [Inject(Id = PlayerTargetId.Value)] ITargetProvider playerTarget)
         {
             _targetRegistry = targetRegistry;
             _enemyFactory = enemyFactory;
+            _vfxService = vfxService;
+            _vfxConfig = vfxConfig;
             _playerTarget = playerTarget;
         }
 
@@ -80,9 +89,14 @@ namespace EnemyWaves.Gameplay.Enemies
                 return;
 
             _model.TakeDamage(amount);
-            if (!_model.IsAlive)
+
+            if (_model.IsAlive)
+                _vfxService.Play(_vfxConfig.EnemyHit, BodyCenter);
+            else
                 Die();
         }
+
+        private Vector3 BodyCenter => transform.position + Vector3.up * Mathf.Max(_bodyRadius, 0.5f);
 
         private void Update()
         {
@@ -183,6 +197,7 @@ namespace EnemyWaves.Gameplay.Enemies
 
         private void Die()
         {
+            _vfxService.Play(_vfxConfig.EnemyDeath, BodyCenter);
             _targetRegistry.Unregister(this);
             _enemyFactory.Despawn(this);
         }

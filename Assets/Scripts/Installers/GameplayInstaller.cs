@@ -18,6 +18,7 @@ namespace EnemyWaves.Installers
         [SerializeField] private WeaponConfig _weaponConfig;
         [SerializeField] private EnemyDatabase _enemyDatabase;
         [SerializeField] private WaveConfig _waveConfig;
+        [SerializeField] private VfxConfig _vfxConfig;
 
         [Header("Scene References")]
         [SerializeField] private PlayerHealth _playerHealth;
@@ -31,6 +32,7 @@ namespace EnemyWaves.Installers
             Container.BindInstance(_weaponConfig);
             Container.BindInstance(_enemyDatabase);
             Container.BindInstance(_waveConfig);
+            Container.BindInstance(_vfxConfig);
 
             Container.Bind<PlayerModel>()
                 .FromMethod(() => new PlayerModel(_playerConfig.MaxHealth))
@@ -47,6 +49,10 @@ namespace EnemyWaves.Installers
 
             Container.Bind(typeof(IGameStateService), typeof(ITickable))
                 .To<GameStateService>()
+                .AsSingle();
+
+            Container.Bind(typeof(IVfxService), typeof(ITickable))
+                .To<VfxService>()
                 .AsSingle();
 
             Container.BindInterfacesTo<EnemySpawnService>().AsSingle();
