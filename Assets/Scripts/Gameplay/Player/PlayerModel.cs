@@ -2,7 +2,6 @@ using UniRx;
 
 namespace EnemyWaves.Gameplay.Player
 {
-    /// <summary>Plain data/state for the player, no Unity dependencies.</summary>
     public class PlayerModel
     {
         public readonly ReactiveProperty<float> Health;

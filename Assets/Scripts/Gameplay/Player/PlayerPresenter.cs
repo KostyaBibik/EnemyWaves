@@ -5,7 +5,6 @@ using Zenject;
 
 namespace EnemyWaves.Gameplay.Player
 {
-    /// <summary>Wires PlayerModel state to game-level consequences (game over) and to the HUD (via HudPresenter subscribing to the same model).</summary>
     public class PlayerPresenter : IInitializable, IDisposable
     {
         private readonly PlayerModel _model;

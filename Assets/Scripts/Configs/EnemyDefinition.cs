@@ -2,10 +2,6 @@ using UnityEngine;
 
 namespace EnemyWaves.Configs
 {
-    /// <summary>
-    /// One enemy "type" fully authored by a game designer: model/prefab + stats.
-    /// Adding a new enemy to the game = creating one of these assets and dropping it into an EnemyDatabase, no code required.
-    /// </summary>
     [CreateAssetMenu(menuName = "EnemyWaves/Configs/Enemy Definition", fileName = "EnemyDefinition")]
     public class EnemyDefinition : ScriptableObject
     {

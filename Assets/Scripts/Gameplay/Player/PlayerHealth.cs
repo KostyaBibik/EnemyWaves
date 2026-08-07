@@ -4,7 +4,6 @@ using Zenject;
 
 namespace EnemyWaves.Gameplay.Player
 {
-    /// <summary>MonoBehaviour bridge so physics/collision code can hit the player via IDamageable while the actual state lives in PlayerModel.</summary>
     public class PlayerHealth : MonoBehaviour, IDamageable, ITargetProvider
     {
         private PlayerModel _model;
