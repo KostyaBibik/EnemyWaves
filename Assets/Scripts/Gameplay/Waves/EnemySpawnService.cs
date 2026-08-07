@@ -58,9 +58,18 @@ namespace EnemyWaves.Gameplay.Waves
 
             Vector2 offset = Random.insideUnitCircle.normalized * _config.SpawnRadius;
             Vector3 playerPos = _playerTarget.Transform.position;
-            Vector3 spawnPos = playerPos + new Vector3(offset.x, 0f, offset.y);
+            var spawnPos = new Vector3(playerPos.x + offset.x, ResolveGroundY(), playerPos.z + offset.y);
 
             _enemyFactory.Spawn(definition, spawnPos);
+        }
+
+        private float ResolveGroundY()
+        {
+            var playerTransform = _playerTarget.Transform;
+
+            return playerTransform.TryGetComponent<Collider>(out var playerCollider)
+                ? playerCollider.bounds.min.y
+                : playerTransform.position.y;
         }
     }
 }

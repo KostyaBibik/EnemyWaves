@@ -1,3 +1,4 @@
+using EnemyWaves.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,33 +9,61 @@ namespace EnemyWaves.Gameplay.Enemies
         [SerializeField] private Image _healthFillImage;
         [SerializeField] private Transform _billboardRoot;
 
+        [Tooltip("How fast the health bar sweeps to a new value, in fill units per second.")]
+        [Min(0.01f)] [SerializeField] private float _healthBarSpeed = 1.8f;
+
         private Transform _cameraTransform;
-        private Quaternion _lastCameraRotation;
+        private FillBarAnimator _healthBarInstance;
+
+        private FillBarAnimator HealthBar =>
+            _healthBarInstance ??= new FillBarAnimator(_healthFillImage, _healthBarSpeed);
 
         private void Awake()
         {
-            var camera = Camera.main;
-            if (camera != null)
-                _cameraTransform = camera.transform;
+            ResolveCamera();
+        }
+
+        private void OnEnable()
+        {
+            ResolveCamera();
+            AlignToCamera();
         }
 
         public void SetHealthFraction(float fraction)
         {
-            if (_healthFillImage != null)
-                _healthFillImage.fillAmount = Mathf.Clamp01(fraction);
+            HealthBar.SetTarget(fraction);
+        }
+
+        public void ResetHealthFraction(float fraction)
+        {
+            HealthBar.Reset(fraction);
         }
 
         private void LateUpdate()
         {
-            if (_billboardRoot == null || _cameraTransform == null)
+            HealthBar.Tick(Time.deltaTime);
+            AlignToCamera();
+        }
+
+        private void AlignToCamera()
+        {
+            if (_billboardRoot == null)
                 return;
 
-            var cameraRotation = _cameraTransform.rotation;
-            if (cameraRotation == _lastCameraRotation)
-                return;
+            if (_cameraTransform == null)
+            {
+                ResolveCamera();
+                if (_cameraTransform == null)
+                    return;
+            }
 
-            _lastCameraRotation = cameraRotation;
-            _billboardRoot.forward = -_cameraTransform.forward;
+            _billboardRoot.rotation = _cameraTransform.rotation;
+        }
+
+        private void ResolveCamera()
+        {
+            var camera = Camera.main;
+            _cameraTransform = camera != null ? camera.transform : null;
         }
     }
 }

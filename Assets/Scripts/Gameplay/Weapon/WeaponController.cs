@@ -1,5 +1,6 @@
 using System;
 using EnemyWaves.Configs;
+using EnemyWaves.Core;
 using EnemyWaves.Services;
 using UnityEngine;
 using Zenject;
@@ -37,14 +38,22 @@ namespace EnemyWaves.Gameplay.Weapon
             if (target == null)
                 return;
 
-            Fire(origin, target.Transform.position);
+            Fire(origin, ResolveAimPoint(target));
             _cooldown = 1f / _config.FireRate;
+        }
+
+        private static Vector3 ResolveAimPoint(ITargetProvider target)
+        {
+            var targetTransform = target.Transform;
+
+            return targetTransform.TryGetComponent<Collider>(out var targetCollider)
+                ? targetCollider.bounds.center
+                : targetTransform.position;
         }
 
         private void Fire(Vector3 origin, Vector3 targetPosition)
         {
             Vector3 direction = targetPosition - origin;
-            direction.y = 0f;
             if (direction.sqrMagnitude < 0.0001f)
                 direction = transform.forward;
 
