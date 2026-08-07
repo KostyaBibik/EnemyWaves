@@ -62,3 +62,6 @@ UI/           HudPresenter/View, GameOverPresenter/View, FillBarAnimator, SafeAr
 
 `Assets/Prefabs/` — враги (`Grunt`, `Runner`, `Brute`) и `Projectile`.
 `Assets/Art/`, `Assets/Textures/`, `Assets/Materials/` и папки сторонних паков — графика и VFX.
+
+
+https://github.com/user-attachments/assets/efdf8efd-fa92-4567-a7f3-6b165bb3da87
